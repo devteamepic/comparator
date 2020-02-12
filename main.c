@@ -28,10 +28,10 @@ int compareArrays(int a[], int b[], int size) {
 int main(){
   FILE* stream = fopen("data.csv", "r");
 
-  char line[1024];
-  while(fgets(line, 1024, stream)) {
+  char line[2048];
+  while(fgets(line, 2048, stream)) {
     char* tmp = strdup(line);
-    printf("Field 8 %s\n", getField(tmp, 8));
+    printf("Field 10 %s\n", getField(tmp, 10));
 
     free(tmp);
   }
