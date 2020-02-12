@@ -4,7 +4,7 @@
 
 const char* getField(char* line, int num) {
   const char* tok;
-  for (tok = strtok(line, ","); tok && *tok; tok = strtok(NULL, ",\n")) {
+  for (tok = strtok(line, ";"); tok && *tok; tok = strtok(NULL, ";")) {
     if (!--num) {
       return tok;
     }
@@ -26,7 +26,7 @@ int compareArrays(int a[], int b[], int size) {
 }
 
 int main(){
-  FILE* stream = fopen("./data/data.csv", "r");
+  FILE* stream = fopen("data.csv", "r");
 
   char line[1024];
   while(fgets(line, 1024, stream)) {
