@@ -5,7 +5,14 @@ import numpy as np
 
 
 def remove_from_csv(item):
-    print('asdf')
+    with open('../data.csv', 'rb', ) as inpt, open('../data_converted.csv', 'wb') as out:
+        writer = csv.writer(out, delimiter=';')
+        for row in csv.reader(inpt, delimiter=';'):
+            if row[3] != item:
+                writer.writerow(row)
+            else:
+                print('asdf')
+
 
 
 def remove_from_directory(item):
