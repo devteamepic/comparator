@@ -1,22 +1,41 @@
+# -*- coding: utf-8 -*-
 import csv
 import glob, os
 import numpy as np
 
 
-def match_and_delete(subjectArray, counterpartArray):
+def remove_from_csv(item):
+    print('asdf')
+
+
+def remove_from_directory(item):
+    for x in os.listdir('./'):
+        if x == item:
+            try:
+                os.remove(item)
+                print('Removed from files: ' + item)
+            except OSError:
+                print('Remove manualy: ' + item)
+
+
+
+def match_and_delete(subjectArray, counterpartArray, isCsv):
     counter = 0
     subjectHolder = subjectArray
     counterpartHolder = counterpartArray
 
-    if subjectArray.ndim > 1:
+    if isCsv:
         subjectHolder = subjectArray[:, 3]
     else:
         counterpartHolder = counterpartArray[:, 3]
 
     for item in subjectHolder:
         if item not in counterpartHolder:
-            print(item)
             subjectArray = np.delete(subjectArray, counter, 0)
+            if isCsv:
+                remove_from_csv(item)
+            else:
+                remove_from_directory(item)
             return False, subjectArray
         counter = counter + 1
 
@@ -49,12 +68,12 @@ def convert(arr, fileArr):
     if (type(arr).__module__ != np.__name__):
        arr, fileArr = read_data_and_reshape(arr, fileArr) 
 
-    trigger, arr = match_and_delete(arr, fileArr)
+    trigger, arr = match_and_delete(arr, fileArr, True)
 
     if not trigger:
         return trigger, arr, fileArr
 
-    trigger, fileArr = match_and_delete(fileArr, arr)
+    trigger, fileArr = match_and_delete(fileArr, arr, False)
 
     return trigger, arr, fileArr
 
