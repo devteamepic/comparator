@@ -1,4 +1,5 @@
 data.csv
 data_converted.csv
+*.pyc
 
 files/
