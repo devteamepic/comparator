@@ -1,8 +1,17 @@
-# -*- coding: utf-8 -*-
 import csv
-import glob, os
+import os, glob
 import numpy as np
 
+def compare():
+    arr = []
+    fileArr = []
+    trigger = False
+    
+    while not trigger:
+        trigger, arr, fileArr = convert(arr, fileArr)
+    
+    print(arr[:, 3].size)
+    print(fileArr.size)
 
 def remove_from_csv(item):
     with open('../data.csv', 'rb', ) as inpt, open('../data_converted.csv', 'wb') as out:
@@ -83,19 +92,3 @@ def convert(arr, fileArr):
     trigger, fileArr = match_and_delete(fileArr, arr, False)
 
     return trigger, arr, fileArr
-
-
-def main():
-    arr = []
-    fileArr = []
-    trigger = False
-    
-    while not trigger:
-        trigger, arr, fileArr = convert(arr, fileArr)
-    
-    print(arr[:, 3].size)
-    print(fileArr.size)
-
-
-if __name__ == "__main__":
-    main()
