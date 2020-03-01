@@ -3,7 +3,7 @@ import sys
 import single_dicipline_comparator as sdc
 
 
-if __name__ == "__main__":
+def main():
     print(str(sys.argv))
     options = {
         '-sd' : sdc.compare,
@@ -11,4 +11,7 @@ if __name__ == "__main__":
         '-h' : 'asdffasfd'
     }
     options[sys.argv[1]]()
-#    main()
+
+
+if __name__ == "__main__":
+    main()
