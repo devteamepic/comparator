@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 import sys
-import single_dicipline_comparator as sdc
+import single_discipline_comparator as sdc
 
 
 def main():
