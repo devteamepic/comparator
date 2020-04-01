@@ -25,7 +25,7 @@ def read_data_and_reshape(arr, fileArr, directory):
 
 
 def remove_from_csv(item, directory = ''):
-    with open(directory + '/data.csv', 'rb', ) as inpt, open(directory + '/data_converted.csv', 'wb') as out:
+    with open(directory + '/data.csv', 'rt', ) as inpt, open(directory + '/data_converted.csv', 'wt') as out:
         writer = csv.writer(out, delimiter=';')
         for row in csv.reader(inpt, delimiter=';'):
             if row[3] != item:
@@ -35,9 +35,10 @@ def remove_from_csv(item, directory = ''):
 def remove_from_directory(item, directory = ''):
     for x in os.listdir(directory + '/files/'):
         if x == item:
+            print(x)
+            print(item)
             try:
                 os.remove(item)
                 print('Removed from files: ' + item)
             except OSError:
                 print('Remove manualy: ' + item)
-        print('here another')

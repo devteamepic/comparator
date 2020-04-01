@@ -8,16 +8,20 @@ def compare():
     arr = []
     fileArr = []
     trigger = False
-    
+    stateEnum = ['CSV', 'FILES']
+    stateNumber = 0
+
     while not trigger:
-        trigger, arr, fileArr = convert(arr, fileArr, trigger)
+        trigger, stateNumber, arr, fileArr = convert(arr, fileArr, trigger, stateEnum[stateNumber])
+
+        if stateNumber > 1:
+            trigger = false
 
    # TODO delete old data.csv and make a new one
-    print(arr[:, 3].size)
-    print(fileArr.size)
+    print('done')
 
 
-def match_and_delete(subjectArray, counterpartArray, isCsv):
+def match_and_delete(subjectArray, counterpartArray, isCsv, stateNumber):
     counter = 0
     subjectHolder = subjectArray
     counterpartHolder = counterpartArray
@@ -27,40 +31,38 @@ def match_and_delete(subjectArray, counterpartArray, isCsv):
     else:
         counterpartHolder = counterpartArray[:, 3]
 
-#    if asdf:
-#        print(subjectHolder)
-#        print('----------')
-#        print(counterpartHolder)
     for item in subjectHolder:
         dummy = './singleDisciplineDirectory/files/' + item
         if dummy not in counterpartHolder:
             subjectArray = np.delete(subjectArray, counter, 0)
             if isCsv:
                 mf.remove_from_csv(item, './singleDisciplineDirectory')
-            else:
-                print('here')
-                mf.remove_from_directory(item, './singleDisciplineDirectory')
-            return False, subjectArray
+                return stateNumber, subjectArray
+
+            mf.remove_from_directory(item, './singleDisciplineDirectory')
+            return stateNumber, subjectArray
         counter = counter + 1
 
-    print('what')
-    return True, subjectArray
+    stateNumber = stateNumber + 1
+    print(stateNumber)
+    return stateNumber, subjectArray
 
 
-def convert(arr, fileArr, trigger):
-
+def convert(arr, fileArr, trigger, state):
+    stateNumber = 0
     if (type(arr).__module__ != np.__name__):
         arr, fileArr = mf.read_data_and_reshape(arr, fileArr, './singleDisciplineDirectory') 
 
     # TODO under construction
-    if trigger:
-        trigger, fileArr = match_and_delete(fileArr, arr, False)
-        return trigger, arr, fileArr
+    if state == 'FILES':
+        print('asdf')
+        stateNumber, fileArr = match_and_delete(fileArr, arr, False, stateNumber)
+        return trigger, stateNumber, arr, fileArr
 
-    trigger, arr = match_and_delete(arr, fileArr, True)
+    if state == 'CSV':
+        print('aasdf')
+        trigger, arr = match_and_delete(arr, fileArr, True, stateNumber)
+        print(stateNumber)
+        return trigger, stateNumber, arr, fileArr,
 
-    if not trigger:
-        return trigger, arr, fileArr
-    
-
-    return None, [], []
+    return True, [], []
