@@ -12,10 +12,10 @@ def compare():
     stateNumber = 0
 
     while not trigger:
-        trigger, stateNumber, arr, fileArr = convert(arr, fileArr, trigger, stateEnum[stateNumber])
+        trigger, stateNumber, arr, fileArr = convert(arr, fileArr, trigger, stateEnum[stateNumber], stateNumber)
 
         if stateNumber > 1:
-            trigger = false
+            trigger = False
 
    # TODO delete old data.csv and make a new one
     print('done')
@@ -44,12 +44,11 @@ def match_and_delete(subjectArray, counterpartArray, isCsv, stateNumber):
         counter = counter + 1
 
     stateNumber = stateNumber + 1
-    print(stateNumber)
     return stateNumber, subjectArray
 
 
-def convert(arr, fileArr, trigger, state):
-    stateNumber = 0
+def convert(arr, fileArr, trigger, state, stateNumber):
+    print(stateNumber)
     if (type(arr).__module__ != np.__name__):
         arr, fileArr = mf.read_data_and_reshape(arr, fileArr, './singleDisciplineDirectory') 
 
@@ -61,8 +60,7 @@ def convert(arr, fileArr, trigger, state):
 
     if state == 'CSV':
         print('aasdf')
-        trigger, arr = match_and_delete(arr, fileArr, True, stateNumber)
-        print(stateNumber)
+        stateNumber, arr = match_and_delete(arr, fileArr, True, stateNumber)
         return trigger, stateNumber, arr, fileArr,
 
     return True, [], []

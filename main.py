@@ -2,7 +2,6 @@
 import sys
 import single_discipline_comparator as sdc
 
-
 def main():
     print(str(sys.argv))
     options = {
