@@ -12,10 +12,12 @@ def compare():
     stateNumber = 0
 
     while not trigger:
+        if stateNumber > 1:
+            trigger = True
+            continue
+
         trigger, stateNumber, arr, fileArr = convert(arr, fileArr, trigger, stateEnum[stateNumber], stateNumber)
 
-        if stateNumber > 1:
-            trigger = False
 
    # TODO delete old data.csv and make a new one
     print('done')
@@ -32,15 +34,21 @@ def match_and_delete(subjectArray, counterpartArray, isCsv, stateNumber):
         counterpartHolder = counterpartArray[:, 3]
 
     for item in subjectHolder:
-        dummy = './singleDisciplineDirectory/files/' + item
+        if isCsv:
+            dummy = './singleDisciplineDirectory/files/' + item
+        else:
+            dummy = item.replace('./singleDisciplineDirectory/files/', '')
+
         if dummy not in counterpartHolder:
+            print('now here')
             subjectArray = np.delete(subjectArray, counter, 0)
             if isCsv:
                 mf.remove_from_csv(item, './singleDisciplineDirectory')
                 return stateNumber, subjectArray
-
-            mf.remove_from_directory(item, './singleDisciplineDirectory')
-            return stateNumber, subjectArray
+            else:
+                print('asdf')
+                mf.remove_from_directory(item, './singleDisciplineDirectory')
+                return stateNumber, subjectArray
         counter = counter + 1
 
     stateNumber = stateNumber + 1
@@ -48,18 +56,16 @@ def match_and_delete(subjectArray, counterpartArray, isCsv, stateNumber):
 
 
 def convert(arr, fileArr, trigger, state, stateNumber):
-    print(stateNumber)
     if (type(arr).__module__ != np.__name__):
         arr, fileArr = mf.read_data_and_reshape(arr, fileArr, './singleDisciplineDirectory') 
 
     # TODO under construction
     if state == 'FILES':
-        print('asdf')
+        print('in files')
         stateNumber, fileArr = match_and_delete(fileArr, arr, False, stateNumber)
         return trigger, stateNumber, arr, fileArr
 
     if state == 'CSV':
-        print('aasdf')
         stateNumber, arr = match_and_delete(arr, fileArr, True, stateNumber)
         return trigger, stateNumber, arr, fileArr,
 

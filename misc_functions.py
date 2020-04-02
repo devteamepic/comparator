@@ -30,13 +30,15 @@ def remove_from_csv(item, directory = ''):
         for row in csv.reader(inpt, delimiter=';'):
             if row[3] != item:
                 writer.writerow(row)
+    os.remove(directory + '/data.csv')
+    os.rename(directory + '/data_converted.csv', directory + '/data.csv')
 
 
 def remove_from_directory(item, directory = ''):
+    print(item)
     for x in os.listdir(directory + '/files/'):
-        if x == item:
-            print(x)
-            print(item)
+        if directory + '/files/' + x == item:
+
             try:
                 os.remove(item)
                 print('Removed from files: ' + item)
