@@ -1,9 +1,5 @@
 singleDisciplineDirectory/data.csv
-singleDisciplineDirectory/data_converted.csv
-multipleDisciplineDirectory/data.csv
-multipleDisciplineDirectory/data_converted.csv
 
 *.pyc
 
 singleDisciplineDirectory/files/
-multipleDisciplineDirectory/files/
