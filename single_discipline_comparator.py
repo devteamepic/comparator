@@ -40,13 +40,11 @@ def match_and_delete(subjectArray, counterpartArray, isCsv, stateNumber):
             dummy = item.replace('./singleDisciplineDirectory/files/', '')
 
         if dummy not in counterpartHolder:
-            print('now here')
             subjectArray = np.delete(subjectArray, counter, 0)
             if isCsv:
                 mf.remove_from_csv(item, './singleDisciplineDirectory')
                 return stateNumber, subjectArray
             else:
-                print('asdf')
                 mf.remove_from_directory(item, './singleDisciplineDirectory')
                 return stateNumber, subjectArray
         counter = counter + 1
@@ -61,7 +59,6 @@ def convert(arr, fileArr, trigger, state, stateNumber):
 
     # TODO under construction
     if state == 'FILES':
-        print('in files')
         stateNumber, fileArr = match_and_delete(fileArr, arr, False, stateNumber)
         return trigger, stateNumber, arr, fileArr
 

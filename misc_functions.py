@@ -35,7 +35,6 @@ def remove_from_csv(item, directory = ''):
 
 
 def remove_from_directory(item, directory = ''):
-    print(item)
     for x in os.listdir(directory + '/files/'):
         if directory + '/files/' + x == item:
 
